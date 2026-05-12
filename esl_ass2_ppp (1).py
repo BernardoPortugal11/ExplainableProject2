@@ -430,6 +430,66 @@ def plot_rsf_feature_importance(model, X_test, y_test):
     plt.close()
 
 
+def save_model_comparison_table(cox_cindex, rsf_cindex, gbsa_cindex,
+                                rsf_ibs, gbsa_ibs, cox_aic):
+
+    # Create dataframe
+    df = pd.DataFrame({
+        "Model": [
+            "Cox PH",
+            "Random Survival Forest",
+            "Gradient Boosting SA"
+        ],
+        "C-index ↑": [
+            round(cox_cindex, 4),
+            round(rsf_cindex, 4),
+            round(gbsa_cindex, 4)
+        ],
+        "IBS ↓": [
+            "-",
+            round(rsf_ibs, 4),
+            round(gbsa_ibs, 4)
+        ],
+        "AIC ↓": [
+            round(cox_aic, 2),
+            "-",
+            "-"
+        ],
+        "Interpretability": [
+            "High",
+            "Medium",
+            "Medium"
+        ]
+    })
+
+    # Create figure
+    fig, ax = plt.subplots(figsize=(10, 2.5))
+    ax.axis('off')
+
+    # Create table
+    table = ax.table(
+        cellText=df.values,
+        colLabels=df.columns,
+        cellLoc='center',
+        loc='center'
+    )
+
+    # Styling
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+    table.scale(1.2, 1.6)
+
+    # Save image
+    plt.savefig(
+        "results/model_comparison_table.png",
+        bbox_inches='tight',
+        dpi=300
+    )
+
+    plt.close()
+
+    print("Model comparison table saved.")
+
 def compute_brier_score(model, X_train, X_test, y_train, y_test):
     """
     Computes Integrated Brier Score safely.
@@ -491,6 +551,7 @@ def save_dataset_summary(df):
 
     summary_df = pd.DataFrame(summary.items(), columns=["Metric", "Value"])
     summary_df.to_csv(f"{RESULTS_DIR}/dataset_summary.csv", index=False)
+
 
 
 def save_metrics(cox_c_index, rsf_c_index, rsf_ibs,

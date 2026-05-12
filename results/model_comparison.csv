@@ -1,0 +1,4 @@
+Model,C-index,Integrated Brier Score,Interpretability
+Cox Proportional Hazards,0.6695652173913044,,High
+Random Survival Forest,0.6295652173913043,0.12427681848822564,Medium
+Gradient Boosting Survival Analysis,0.7026086956521739,0.11397125214219826,Medium
