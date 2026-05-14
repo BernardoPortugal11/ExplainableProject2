@@ -635,6 +635,15 @@ def main():
     gbsa_ibs
     )
 
+    save_model_comparison_table(
+    cox_c_index,
+    rsf_c_index,
+    gbsa_c_index,
+    rsf_ibs,
+    gbsa_ibs,
+    cox_aic=cox_model.AIC_partial_
+)
+
 
 
 if __name__ == "__main__":
